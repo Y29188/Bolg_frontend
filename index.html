@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<title>小眠的博客</title>
 	<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="./css/base.css">
 	<style>
@@ -45,7 +45,6 @@
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 						data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -55,27 +54,22 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#" style="display:flex;">
-						汪玮的博客
+						小眠的博客
 					</a>
 				</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#">首页</a></li>
 						<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-									aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="/cate.html?id=2">html</a></li>
-									<li><a href="/cate.html?id=2">css</a></li>
-									<li><a href="/cate.html?id=2">javascript</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="/cate.html?id=2">mysql</a></li>
-									<li><a href="/cate.html?id=2">Linux</a></li>
-								</ul>
-							</li>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+								aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+							<ul class="dropdown-menu" id="dropdown-menu">
+								<!-- <li><a href="/cate.html?id=2">html</a></li> -->
+
+							</ul>
+						</li>
 						<li><a href="/tags.html">标签</a></li>
 						<li><a href="/about.html">关于我</a></li>
 					</ul>
@@ -85,77 +79,11 @@
 
 		<div class="content">
 			<h4>最新文章</h4>
-			<div class="artlist">
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
+			<div class="artlist" id='artlist'>
 
 			</div>
 		</div>
-		<button type="button" class="btn  btn-block">查看更多</button>
+		<button type="button" id="loadMore" class="btn  btn-block">查看更多</button>
 		<hr>
 
 		<div class="footer" style="text-align:center;font-size: 14px; color: #999;margin:10px 0;">
@@ -165,5 +93,73 @@
 </body>
 <script src="./js/jquery.js"></script>
 <script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+<script type="text/javascript">
+	let page = 1;
+	let pageSize = 3;
+	let isDone = false;  // 记录数据是否加载完毕，true-完毕 false-没有加载完毕
+	// 初始化 分类
+	async function initCateData() {
+		let result = await $.get('http://127.0.0.1:3000/api/cate')
+		let cateHtmls = ''
+		result.forEach(item => {
+			const { cate_id, cate_name } = item
+			cateHtmls += `<li><a href="/cate.html?id=${cate_id}">${cate_name}</a></li>`
+		})
+
+		$("#dropdown-menu").html(cateHtmls); // jQ
+		// $("#dropdown-menu")[0].innerHTML = cateHtmls ; // 原生DOM
+	}
+
+	// 初始化文章
+	async function initArticle(page, pageSize) {
+		let result = await $.get(`http://127.0.0.1:3000/api/article?page=${page}&pageSize=${pageSize}`)
+		if (result.length === 0) {
+			layer.msg('数据已经加载完毕了')
+			isDone = true;
+			return false;
+		}
+		let newArticleHtmls = ''
+		result.forEach(item => {
+			let { id, cate_id, cate_name, username, title, add_date, pic, host } = item
+			let imgSrc = `${host}${pic}`
+			newArticleHtmls += `
+				<div class='item row'>
+					<div class="col-md-2">
+						<img src="${imgSrc}" alt="">
+					</div>
+					<div class="col-md-10">
+						<div class="date ">作者：${username} 、 ${add_date} 、分类：${cate_name}</div>
+						<div class="title">${title}...</div>
+						<div class="intro">${title}...</div>
+					</div>
+					<hr>
+				</div>
+			`;
+		})
+
+		// 追加形式
+		let oldArticleHtmls = $("#artlist").html()
+		$("#artlist").html(oldArticleHtmls + newArticleHtmls)
+
+	}
+
+
+	initCateData();
+	initArticle(page, pageSize)
+
+	// 单击加载更多
+	$("#loadMore").on('click', () => {
+		if (isDone) {
+			layer.msg('没有数据了，您去后台添加点吧')
+			return;
+		}
+		// 1. 页码page++，重新发请求
+		page++
+		initArticle(page, pageSize)
+		// 2. 返回来的数据追加到页面中
+	})
+
+</script>
 
 </html>
