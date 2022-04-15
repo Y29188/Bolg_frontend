@@ -97,10 +97,10 @@
 <script type="text/javascript">
 	let page = 1;
 	let pageSize = 3;
-	let isDone = false;  // 记录数据是否加载完毕，true-完毕 false-没有加载完毕
+	let isDone = false;  // 记录数据是否加载完毕，true=完毕, false=没有加载完毕
 	// 初始化 分类
 	async function initCateData() {
-		let result = await $.get('http://127.0.0.1:3000/api/cate')
+		let result = await $.get('http://127.0.0.1:4700/api/cate')
 		let cateHtmls = ''
 		result.forEach(item => {
 			const { cate_id, cate_name } = item
@@ -113,7 +113,7 @@
 
 	// 初始化文章
 	async function initArticle(page, pageSize) {
-		let result = await $.get(`http://127.0.0.1:3000/api/article?page=${page}&pageSize=${pageSize}`)
+		let result = await $.get(`http://127.0.0.1:4700/api/article?page=${page}&pageSize=${pageSize}`)
 		if (result.length === 0) {
 			layer.msg('数据已经加载完毕了')
 			isDone = true;
@@ -146,17 +146,17 @@
 
 
 	initCateData();
-	initArticle(page, pageSize)
+	initArticle(page, pageSize);
 
 	// 单击加载更多
 	$("#loadMore").on('click', () => {
 		if (isDone) {
-			layer.msg('没有数据了，您去后台添加点吧')
+			layer.msg('没有数据了，您去后台添加点吧');
 			return;
 		}
 		// 1. 页码page++，重新发请求
-		page++
-		initArticle(page, pageSize)
+		page++;
+		initArticle(page, pageSize);
 		// 2. 返回来的数据追加到页面中
 	})
 
