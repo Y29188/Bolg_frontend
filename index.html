@@ -5,9 +5,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>小眠的博客</title>
-	<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="./css/base.css">
+	<title>小肥虾的博客</title>
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
 	<style>
 		.content .item {
 			margin-top: 10px;
@@ -45,6 +45,7 @@
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 						data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -54,22 +55,22 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#" style="display:flex;">
-						小眠的博客
+						小肥虾的博客
 					</a>
 				</div>
 
+				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#">首页</a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-								aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
-							<ul class="dropdown-menu" id="dropdown-menu">
-								<!-- <li><a href="/cate.html?id=2">html</a></li> -->
-
-							</ul>
-						</li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+								<ul class="dropdown-menu" id="dropdown-menu">
+									<!-- <li><a href="/cate.html?id=2">html</a></li> -->
+									
+								</ul>
+							</li>
 						<li><a href="/tags.html">标签</a></li>
 						<li><a href="/about.html">关于我</a></li>
 					</ul>
@@ -80,6 +81,7 @@
 		<div class="content">
 			<h4>最新文章</h4>
 			<div class="artlist" id='artlist'>
+				
 
 			</div>
 		</div>
@@ -87,51 +89,54 @@
 		<hr>
 
 		<div class="footer" style="text-align:center;font-size: 14px; color: #999;margin:10px 0;">
-			首页 | 主站 | GitHub | created at 2020/02/4 | Powered by 汪玮
+			首页 | 主站 | GitHub | created at 2022/04/15 | Powered by 小眠
 		</div>
 	</div>
 </body>
-<script src="./js/jquery.js"></script>
-<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="./assets/js/jquery.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.2/moment.js"></script>
 <script type="text/javascript">
 	let page = 1;
-	let pageSize = 3;
-	let isDone = false;  // 记录数据是否加载完毕，true=完毕, false=没有加载完毕
-	// 初始化 分类
-	async function initCateData() {
-		let result = await $.get('http://127.0.0.1:4700/api/cate')
-		let cateHtmls = ''
-		result.forEach(item => {
-			const { cate_id, cate_name } = item
-			cateHtmls += `<li><a href="/cate.html?id=${cate_id}">${cate_name}</a></li>`
+	let pagesize = 3;
+	let isDone = false; // 记录数据是否加载完毕，true-完毕 false-没有加载完毕
+	
+	async function initCateData(){
+		let result = await $.get('http://127.0.0.1:4700/api/cate');
+		let cateHtmls = '';
+		result.forEach(item=>{
+			const {cate_id,cate_name} = item;
+			cateHtmls += `<li><a href="/cate.html?id=${cate_id}">${cate_name}</a></li>`;
 		})
 
 		$("#dropdown-menu").html(cateHtmls); // jQ
 		// $("#dropdown-menu")[0].innerHTML = cateHtmls ; // 原生DOM
 	}
-
-	// 初始化文章
-	async function initArticle(page, pageSize) {
-		let result = await $.get(`http://127.0.0.1:4700/api/article?page=${page}&pageSize=${pageSize}`)
-		if (result.length === 0) {
-			layer.msg('数据已经加载完毕了')
+	
+	async function initArticle(page,pagesize){
+		let result = await $.get(`http://127.0.0.1:4700/api/article?page=${page}&pagesize=${pagesize}`);
+		if(result.length === 0){
+			layer.msg('数据已经加载完毕了');
 			isDone = true;
 			return false;
 		}
-		let newArticleHtmls = ''
-		result.forEach(item => {
-			let { id, cate_id, cate_name, username, title, add_date, pic, host } = item
-			let imgSrc = `${host}${pic}`
+		let newArticleHtmls = '';
+		console.log(result,'result');
+		result.forEach(item=>{
+			let {id,cate_id,cate_name,username,title,add_date,pic,host,content} = item;
+			add_date = moment(add_date).format('YYYY-MM-DD');
+			let imgSrc = pic ? `${host}${pic}` : './image/logo.png';
+			console.log(cate_name,'cate_name');
 			newArticleHtmls += `
 				<div class='item row'>
 					<div class="col-md-2">
-						<img src="${imgSrc}" alt="">
+						<a href="/detail.html?id=${id}"><img src="${imgSrc}" alt=""></a>
 					</div>
 					<div class="col-md-10">
-						<div class="date ">作者：${username} 、 ${add_date} 、分类：${cate_name}</div>
-						<div class="title">${title}...</div>
-						<div class="intro">${title}...</div>
+						<div class="date ">作者：${username} &nbsp; ${add_date} &nbsp;分类：<a href="/cate.html?cate_id=${cate_id}">&nbsp;${cate_name}</a></div>
+						<a href="/detail.html?id=${id}"><div class="title">${title}...</div></a>
+						<div class="intro">${title}</div>
 					</div>
 					<hr>
 				</div>
@@ -139,24 +144,25 @@
 		})
 
 		// 追加形式
-		let oldArticleHtmls = $("#artlist").html()
-		$("#artlist").html(oldArticleHtmls + newArticleHtmls)
-
+		let oldArticleHtmls = $("#artlist").html();
+		$("#artlist").html(oldArticleHtmls + newArticleHtmls);
 	}
 
-
+	// 初始化 分类
 	initCateData();
-	initArticle(page, pageSize);
+
+	// 初始化文章
+	initArticle(page,pagesize);
 
 	// 单击加载更多
-	$("#loadMore").on('click', () => {
-		if (isDone) {
-			layer.msg('没有数据了，您去后台添加点吧');
+	$("#loadMore").on('click',()=>{
+		if(isDone){
+			layer.msg('已经滑到底了');
 			return;
 		}
 		// 1. 页码page++，重新发请求
-		page++;
-		initArticle(page, pageSize);
+		page++
+		initArticle(page,pagesize);
 		// 2. 返回来的数据追加到页面中
 	})
 

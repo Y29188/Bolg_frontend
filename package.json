@@ -1,0 +1,26 @@
+{
+  "name": "220415-backfront",
+  "version": "1.0.0",
+  "description": "思路：\r 1. 页码page++，重新发请求\r 2. 返回来的数据追加到页面中",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/X1005Z/backFront.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/X1005Z/backFront/issues"
+  },
+  "homepage": "https://github.com/X1005Z/backFront#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "path": "^0.12.7"
+  }
+}

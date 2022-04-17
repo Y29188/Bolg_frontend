@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Document</title>
-	<link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="./css/base.css">
+	<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="/assets/css/base.css">
 	<style>
 		.crumbs {
 			font-size: 14px;
@@ -50,7 +50,6 @@
 	<div class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
-				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
 						data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -60,11 +59,10 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="#" style="display:flex;">
-						汪玮的博客
+						小肥虾的博客
 					</a>
 				</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
 					<ul class="nav navbar-nav navbar-right">
@@ -89,77 +87,11 @@
 		</nav>
 
 		<div>
-			<h4 class="crumbs" style="text-align:left;">当前位置：首页 / 所有分类 / 体育 </h4>
+			<h4 class="crumbs" id="crumbs" style="text-align:left;"></h4>
 		</div>
 
 		<div class="content">
-			<div class="artlist">
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
-				<div class='item row'>
-					<div class="col-md-2">
-						<img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：admin 、 2019-12-08 、分类：前端</div>
-						<div class="title">这是介绍中vscode...</div>
-						<div class="intro">这是介绍中vscode这是介绍中vscode这是介绍中vscode...</div>
-					</div>
-					<hr>
-				</div>
+			<div class="artlist" id="artlist">
 
 			</div>
 		</div>
@@ -168,11 +100,49 @@
 		<hr>
 
 		<div class="footer" style="text-align:center;font-size: 14px; color: #999;margin:10px 0;">
-			首页 | 主站 | GitHub | created at 2020/02/4 | Powered by 汪玮
+			首页 | 主站 | GitHub | created at 2022/04/15 | Powered by 小眠
 		</div>
 	</div>
 </body>
-<script src="./js/jquery.js"></script>
-<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/jquery.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.2/moment.js"></script>
+<script type="text/javascript">
+	// 1. 获取地址栏中查询字符串id
+    let reg = /\?cate_id=(\d+)/;
+    let [,cate_id] = location.search.match(reg);
+    // 2. 发请求获取数据并渲染页面（前端渲染）
+    async function  getCateArt(cate_id){
+    	let result = await $.get('http://127.0.0.1:4700/api/fetchCateArt',{cate_id});
+    	console.log(result);
+    	let articleHtmls = '';
+
+    	// 导航栏
+    	$("#crumbs").html(`当前位置：<a href="/">首页</a>  / ${result[0].cate_name} `);
+    	result.forEach(item=>{
+    		let {id,cate_id,cate_name,title,add_date,pic,host} = item;
+			add_date = moment(add_date).format('YYYY-MM-DD');
+			let imgSrc = pic ? `${host}${pic}` : './image/default.png';
+			articleHtmls += `
+				<div class='item row'>
+					<div class="col-md-2">
+						<a href="/detail.html?id=${id}"><img src="${imgSrc}" alt=""></a>
+					</div>
+					<div class="col-md-10">
+						<div class="date "> ${add_date} 、分类：<a href="/cate.html?cate_id=${cate_id}">${cate_name}</a></div>
+						<a href="/detail.html?id=${id}"><div class="title">${title}...</div></a>
+						<div class="intro">${title}...</div>
+					</div>
+					<hr>
+				</div>
+			`;
+    	})
+    	// 赋值
+    	$("#artlist").html(articleHtmls);
+    }
+
+    getCateArt(cate_id);
+
+</script>
 
 </html>

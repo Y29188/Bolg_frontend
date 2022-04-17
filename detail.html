@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/base.css">
     <style>
         .crumbs {
             font-size: 14px;
-            color:#ccc;
+            color: #ccc;
         }
     </style>
 </head>
@@ -20,7 +20,6 @@
     <div class="container">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -30,11 +29,10 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="#" style="display:flex;">
-                        汪玮的博客
+                        小眠的博客
                     </a>
                 </div>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                     <ul class="nav navbar-nav navbar-right">
@@ -58,42 +56,14 @@
             </div><!-- /.container-fluid -->
         </nav>
         <div style="text-align:center;">
-            <h4 class="crumbs" style="text-align:left;">当前位置：首页 / 体育 / OSX Mojave 编译 & 源码调试 openJdk 8</h4>
-            <h3>OSX Mojave 编译 & 源码调试 openJdk 8</h3>
-            <div style="font-size: 14px; color: #999;"> 2019-04-26 /
-                分类：体育 / 点赞：888 <span class="label label-default">HTML</span> <span class="label label-default">JS</span>
+            <h4 class="crumbs" id="crumbs" style="text-align:left;"></h4>
+            <h3 id="title"></h3>
+            <div id="subTitle" style="font-size: 14px; color: #999;">
+               
             </div>
-
-            <p class="intro">
-                为了更好的理解和学习 Java 和 Hotspot 虚拟机，
-                于是在 OSX Mojave 编译 & 源码调试 openJdk 8，
-                中间遇到了很多问题，记录分享一下。
-            </p>
         </div>
-        <div class="content">
-            <div style="text-align: center;">
-                <img src="http://placehold.it/170x100/ff3333/ffffff?text=like%20you" alt="">
-            </div>
-            <h1 style="text-align:center;"><b id="u2fid">CBA开战</b></h1>
-            <div>
-                <h1><b>CBA开战</b><b style="font-size: 2em;">CBA开战</b><b style="font-size: 2em;">CBA开战</b><b
-                        style="font-size: 2em;">CBA开战</b><b style="font-size: 2em;">CBA开战</b><b
-                        style="font-size: 2em;">CBA开战</b><b style="font-size: 2em;">CBA开战</b><b
-                        style="font-size: 2em;">CBA开战</b><b style="font-size: 2em;">CBA开战</b><b
-                        style="font-size: 2em;">CBA开战</b><b style="font-size: 2em;">CBA开战</b></h1>
-            </div>
-            <div style="text-align:center;"><br></div>
-            <p style="text-align:center;"><br></p>
-            <p style="text-align:center;"><br></p>
-            <p style="text-align:center;">
-                <font color="#1c487f">fdsfsdfsgsdfgsd</font>
-            </p>
-            <ul>
-                <li>fdf</li>
-                <li>fdfd</li>
-                <li><span style="background-color: rgb(194, 79, 74);">fdfdf</span></li>
-                <li><br></li>
-            </ul>
+        <div class="content" id="content">
+           <!-- 富文本容器 -->
         </div>
         <hr>
         <div class="footer" style="text-align:center;font-size: 14px; color: #999;margin:10px 0;">
@@ -101,7 +71,26 @@
         </div>
     </div>
 </body>
-<script src="./js/jquery.js"></script>
-<script src="./bootstrap/js/bootstrap.min.js"></script>
+<script src="./assets/js/jquery.js"></script>
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.2/moment.js"></script>
+<script type="text/javascript">
+    // 1. 获取地址栏中查询字符串id
+    let reg = /\?id=(\d+)/;
+    let [, id] = location.search.match(reg);
+    // 2. 发请求获取数据并渲染页面（前端渲染）
+    async function renderArticle(id) {
+        let { title, content, cate_name, cate_id, add_date } = await $.get('http://127.0.0.1:4200/api/fetchOneArt', { id });
+        add_date = moment(add_date).format('YYYY-MM-DD');
+        //3. 渲染页面（DOM操作）
+        let crumbsHtmls = `当前位置：<a href="/">首页</a> / <a href='/cate.html?cate_id=${cate_id}'>${cate_name}</a> / ${title}`;
+        $("#crumbs").html(crumbsHtmls);
+        $("#content").html(content);
+        $("#title").html(title);
+        $("#subTitle").text(` ${add_date} / 分类：${cate_name}`);
+    }
+
+    renderArticle(id);
+</script>
 
 </html>
