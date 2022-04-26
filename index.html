@@ -42,7 +42,7 @@
 </head>
 
 <body>
-	<div class="container">
+	<div id="index" class="container">
 		<nav class="navbar navbar-default">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -59,7 +59,6 @@
 					</a>
 				</div>
 
-				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="#">首页</a></li>
@@ -67,8 +66,9 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 									aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
 								<ul class="dropdown-menu" id="dropdown-menu">
-									<!-- <li><a href="/cate.html?id=2">html</a></li> -->
-									
+									<li v-for="(item,index) in cateData" :key="item.cate_id">
+										<a href=`/cate.html?id=${item.cate_id}`>{{item.cate_name}}</a>
+									</li>
 								</ul>
 							</li>
 						<li><a href="/tags.html">标签</a></li>
@@ -81,7 +81,19 @@
 		<div class="content">
 			<h4>最新文章</h4>
 			<div class="artlist" id='artlist'>
-				
+				<div class='item row' v-for="(it,index) in article" :key="it.id">
+					<div class="col-md-2">
+						<a :href=`/detail.html?id=${it.id}`>
+							<img :src='it.pic ? `http://127.0.0.1:4700/${it.pic}` : "./assets/image/logo.png"'>
+						</a>
+					</div>
+					<div class="col-md-10">
+						<div class="date ">作者：{{it.username}} &nbsp; {{it.add_date}} &nbsp;分类：<a :href=`/cate.html?cate_id=${it.cate_id}`>&nbsp;{{it.cate_name}}</a></div>
+						<a :href=`/detail.html?id=${it.id}`><div class="title">{{it.title}}...</div></a>
+						<div class="intro">{{it.title}}</div>
+					</div>
+					<hr>
+				</div>
 
 			</div>
 		</div>
@@ -97,74 +109,50 @@
 <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/layer.js"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.29.2/moment.js"></script>
+<script src="/assets/js/vue.js"></script>
 <script type="text/javascript">
-	let page = 1;
-	let pagesize = 3;
-	let isDone = false; // 记录数据是否加载完毕，true-完毕 false-没有加载完毕
-	
-	async function initCateData(){
-		let result = await $.get('http://127.0.0.1:4700/api/cate');
-		let cateHtmls = '';
-		result.forEach(item=>{
-			const {cate_id,cate_name} = item;
-			cateHtmls += `<li><a href="/cate.html?id=${cate_id}">${cate_name}</a></li>`;
-		})
+const vm = new Vue({
+        el: "#index",
+        data: {
+            cateData: [],
+            article: [],
+            page: 1,
+            pagesize: 5,
+            articleLength: 1,
+        },
+        created() {
+            this.initCateData()
+            this.initArticle(this.page, this.pagesize)
+        },
+        methods: {
+            // 文章分类
+            async initCateData() {
+                let result = await $.get('http://127.0.0.1:4700/api/cate')
+                result.map(item => item.cate_id = `/cate.html?cate_id=${item.cate_id}`)
+                this.cateData = result
+            },
+            // 文章分页
+            async initArticle(page, pagesize) {
+                let result = await $.get(`http://127.0.0.1:4700/api/article?page=${page}&pagesize=${pagesize}`)
+                let { id, cate_id, cate_name, username, title, add_date, pic } = result
+                if (result.length > 0) {
+                    let newArticle = result.map(item => {
+                        item.add_date = moment(add_date).format('YYYY-MM-DD HH:mm:ss');
+                        return item
+                    })
+                    // 拼接数据  原来的数据(上一次的数据)拼接新获取的数据
+                    this.article = [...this.article, ...newArticle]
+                    return
+                }
+                layer.msg('数据已经加载完毕了', { icon: 1 })
+                this.articleLength = result.length
+            },
+            loadMore() {
+                this.initArticle(++this.page, this.pagesize)
+            }
+        }
+    })
 
-		$("#dropdown-menu").html(cateHtmls); // jQ
-		// $("#dropdown-menu")[0].innerHTML = cateHtmls ; // 原生DOM
-	}
-	
-	async function initArticle(page,pagesize){
-		let result = await $.get(`http://127.0.0.1:4700/api/article?page=${page}&pagesize=${pagesize}`);
-		if(result.length === 0){
-			layer.msg('数据已经加载完毕了');
-			isDone = true;
-			return false;
-		}
-		let newArticleHtmls = '';
-		console.log(result,'result');
-		result.forEach(item=>{
-			let {id,cate_id,cate_name,username,title,add_date,pic,host,content} = item;
-			add_date = moment(add_date).format('YYYY-MM-DD');
-			let imgSrc = pic ? `${host}${pic}` : './image/logo.png';
-			console.log(cate_name,'cate_name');
-			newArticleHtmls += `
-				<div class='item row'>
-					<div class="col-md-2">
-						<a href="/detail.html?id=${id}"><img src="${imgSrc}" alt=""></a>
-					</div>
-					<div class="col-md-10">
-						<div class="date ">作者：${username} &nbsp; ${add_date} &nbsp;分类：<a href="/cate.html?cate_id=${cate_id}">&nbsp;${cate_name}</a></div>
-						<a href="/detail.html?id=${id}"><div class="title">${title}...</div></a>
-						<div class="intro">${title}</div>
-					</div>
-					<hr>
-				</div>
-			`;
-		})
-
-		// 追加形式
-		let oldArticleHtmls = $("#artlist").html();
-		$("#artlist").html(oldArticleHtmls + newArticleHtmls);
-	}
-
-	// 初始化 分类
-	initCateData();
-
-	// 初始化文章
-	initArticle(page,pagesize);
-
-	// 单击加载更多
-	$("#loadMore").on('click',()=>{
-		if(isDone){
-			layer.msg('已经滑到底了');
-			return;
-		}
-		// 1. 页码page++，重新发请求
-		page++
-		initArticle(page,pagesize);
-		// 2. 返回来的数据追加到页面中
-	})
 
 </script>
 
